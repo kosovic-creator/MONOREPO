@@ -9,7 +9,7 @@ Ovaj monorepo sadrži dvije Next.js (App Router, TypeScript) aplikacije: `web` i
   - `apps/admin` — Admin dashboard
 - **Shared packages:**
   - `packages/shared` — Prisma schema, generated types, and shared Tailwind config (including shadcn/ui)
-
+s
 ## Features
 - Next.js (App Router, TypeScript)
 - Tailwind CSS (shared config)
