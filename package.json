@@ -7,6 +7,14 @@
     "apps/*",
     "packages/*"
   ],
+  "scripts": {
+    "dev:web": "pnpm --filter web --workspace-root run dev",
+    "dev:admin": "pnpm --filter admin --workspace-root run dev",
+    "dev:all": "pnpm run dev:web & pnpm run dev:admin",
+    "build:web": "pnpm --filter web --workspace-root run build",
+    "build:admin": "pnpm --filter admin --workspace-root run build",
+    "build:all": "pnpm run build:web && pnpm run build:admin"
+  },
   "dependencies": {
     "@prisma/client": "^6.15.0",
     "@types/react": "19.2.14",
