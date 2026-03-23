@@ -1,0 +1,154 @@
+// This is a basic Prisma schema. Update models as needed.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+
+}
+
+// Example model
+model Korisnik {
+  id                String             @id @default(uuid())
+  email             String             @unique
+  lozinka           String?
+  ime               String?
+  uloga             String             @default("korisnik")
+  kreiran           DateTime           @default(now())
+  azuriran          DateTime           @updatedAt
+  porudzbine        Porudzbina[]
+  stavkeKorpe       StavkaKorpe[]
+  omiljeni          Omiljeni[]
+  podaciPreuzimanja PodaciPreuzimanja?
+}
+
+
+
+model PodaciPreuzimanja {
+  id            String   @id @default(uuid())
+  korisnikId    String   @unique
+  ime           String
+  prezime       String
+  adresa        String
+  drzava        String
+  grad          String
+  postanskiBroj Int
+  telefon       String
+  korisnik      Korisnik @relation(fields: [korisnikId], references: [id], onDelete: Cascade)
+  kreiran       DateTime @default(now())
+  azuriran      DateTime @updatedAt
+}
+
+model StavkaKorpe {
+  id         String   @id @default(uuid())
+  korisnikId String
+  proizvodId String
+  kolicina   Int      @default(1)
+  boja       String?
+  boja_en    String?
+  velicina   String?
+  kreiran    DateTime @default(now())
+  azuriran   DateTime @updatedAt
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [id], onDelete: Cascade)
+  proizvod   Proizvod @relation(fields: [proizvodId], references: [id], onDelete: Cascade)
+
+  @@unique([korisnikId, proizvodId, boja, velicina])
+  @@index([korisnikId])
+}
+
+model Porudzbina {
+  id               String             @id @default(uuid())
+  korisnikId       String
+  ukupno           Float
+  status           String
+  email            String?
+  kreiran          DateTime           @default(now())
+  azuriran         DateTime           @updatedAt
+  idPlacanja       String?            @unique
+  korisnik         Korisnik           @relation(fields: [korisnikId], references: [id], onDelete: Cascade)
+  stavkePorudzbine StavkaPorudzbine[]
+
+  @@index([korisnikId])
+}
+
+model StavkaPorudzbine {
+  id           String     @id @default(uuid())
+  porudzbinaId String
+  proizvodId   String
+  kolicina     Int
+  cena         Float
+  opis         String?
+  rating       Int?
+  boja         String?
+  velicina     String?
+  kreiran      DateTime   @default(now())
+  azuriran     DateTime   @updatedAt
+  slika        String?
+  porudzbina   Porudzbina @relation(fields: [porudzbinaId], references: [id], onDelete: Cascade)
+  proizvod     Proizvod   @relation(fields: [proizvodId], references: [id], onDelete: Cascade)
+
+  @@index([porudzbinaId])
+}
+
+model Omiljeni {
+  id         String   @id @default(uuid())
+  korisnikId String
+  proizvodId String
+  kreiran    DateTime @default(now())
+  korisnik   Korisnik @relation(fields: [korisnikId], references: [id], onDelete: Cascade)
+  proizvod   Proizvod @relation(fields: [proizvodId], references: [id], onDelete: Cascade)
+
+  @@unique([korisnikId, proizvodId])
+  @@index([korisnikId])
+
+}
+
+model Proizvod {
+  id                String                @id @default(cuid())
+  cena              Float
+  slike             String[]
+  kreiran           DateTime              @default(now())
+  azuriran          DateTime              @updatedAt
+  naziv_sr          String
+  opis_sr           String?
+  karakteristike_sr String?
+  kategorija_sr     String
+  naziv_en          String
+  opis_en           String?
+  karakteristike_en String?
+  kategorija_en     String
+  pol               String?
+  pol_en            String?
+  uzrast            String?
+  uzrast_en         String?
+  brend             String?
+  boja              String[]
+  boja_en           String[]
+  materijal         String?
+  materijal_en      String?
+  varijante         ProizvodVarijanta[]
+  stavkeKorpe       StavkaKorpe[]
+  stavkePorudzbine  StavkaPorudzbine[]
+  omiljeni          Omiljeni[]
+  popust            Float? // Popust za sve jezike
+}
+model ProizvodVarijanta {
+  id         String   @id @default(uuid())
+  proizvodId String
+  boja       String
+  boja_en    String   @default("")
+  velicina   String
+  kolicina   Int
+  prodavnica_br Int      @default(1)
+  kreiran    DateTime @default(now())
+  azuriran   DateTime @updatedAt
+  proizvod   Proizvod @relation(fields: [proizvodId], references: [id], onDelete: Cascade)
+
+  @@unique([proizvodId, boja, velicina, prodavnica_br])
+  @@index([proizvodId])
+}
+
+

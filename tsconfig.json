@@ -1,0 +1,43 @@
+// This is the base tsconfig for the monorepo
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@web/*": [
+        "apps/web/*"
+      ],
+      "@admin/*": [
+        "apps/admin/*"
+      ],
+      "@monorepo/shared/*": [
+        "packages/shared/*"
+      ],
+      "@prisma/lib/prisma": [
+        "apps/web/lib/prisma.ts"
+      ],
+      "@prisma/lib/prisma-admin": [
+        "apps/admin/lib/prisma.ts"
+      ],
+      "@admin/lib/prisma": [
+        "apps/admin/lib/prisma.ts"
+      ]
+    },
+    "target": "ES2021",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["DOM", "DOM.Iterable", "ES2021"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "baseUrl": "."
+  },
+  "include": ["apps/*", "packages/*"],
+  "exclude": ["node_modules"]
+}
