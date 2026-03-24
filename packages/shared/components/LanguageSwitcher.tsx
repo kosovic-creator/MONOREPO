@@ -1,5 +1,6 @@
 import React, { useTransition } from 'react';
-import { locales, useI18n } from '../i18n';
+import { locales } from '../i18n';
+import { useI18n } from '../i18n/useI18n';
 
 export function LanguageSwitcher() {
   const { locale, setLocale } = useI18n();

@@ -1,43 +1,31 @@
 import { z } from 'zod';
 import type { Locale } from '../i18n';
+import { loadLocaleJson } from '../i18n';
 
-const messages = {
-  en: {
-    email: 'Invalid email address',
-    required: 'This field is required',
-    passwordMin: 'Password must be at least 6 characters',
-  },
-  sr: {
-    email: 'Neispravna email adresa',
-    required: 'Polje je obavezno',
-    passwordMin: 'Lozinka mora imati najmanje 6 karaktera',
-  },
-};
-
-
-export function getLoginSchema(locale: Locale) {
+export async function getLoginSchema(locale: Locale) {
+  const dict = await loadLocaleJson(locale, 'login');
   return z.object({
     email: z
       .string()
-      .nonempty(messages[locale].required)
-      .email(messages[locale].email),
+      .nonempty(dict.required)
+      .email(dict.invalid_email),
     password: z
       .string()
-      .nonempty(messages[locale].required)
-      .min(6, messages[locale].passwordMin),
+      .nonempty(dict.required)
+      .min(6, dict.password_min),
   });
 }
 
-
-export function getRegisterSchema(locale: Locale) {
+export async function getRegisterSchema(locale: Locale) {
+  const dict = await loadLocaleJson(locale, 'login'); // ili 'register' ako postoji posebna
   return z.object({
     email: z
       .string()
-      .nonempty(messages[locale].required)
-      .email(messages[locale].email),
+      .nonempty(dict.required)
+      .email(dict.invalid_email),
     password: z
       .string()
-      .nonempty(messages[locale].required)
-      .min(6, messages[locale].passwordMin),
+      .nonempty(dict.required)
+      .min(6, dict.password_min),
   });
 }

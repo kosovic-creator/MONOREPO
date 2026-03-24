@@ -1,0 +1,11 @@
+{
+  "title": "Login",
+  "email": "Email",
+  "password": "Password",
+  "login": "Login",
+  "register": "Register",
+  "required": "This field is required",
+  "invalid_email": "Invalid email address",
+  "password_min": "Password must be at least 6 characters",
+  "invalid_login": "Invalid email or password"
+}

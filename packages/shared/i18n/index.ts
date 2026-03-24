@@ -1,7 +1,5 @@
-// Centralized i18n config and helpers for monorepo
-import { createContext, useContext } from 'react';
-import { setLocaleCookie } from './cookie';
-
+import { loadLocale } from './loadLocale';
+// Centralized i18n helpers and types for monorepo (NO React code)
 export type Locale = 'en' | 'sr';
 
 export const locales: Record<Locale, string> = {
@@ -11,56 +9,26 @@ export const locales: Record<Locale, string> = {
 
 export const defaultLocale: Locale = 'en';
 
-export const I18nContext = createContext<{
-  locale: Locale;
-  setLocale: (locale: Locale) => void;
-}>({
-  locale: defaultLocale,
-  setLocale: () => {},
-});
-
-export function useI18n() {
-  return useContext(I18nContext);
+// Universal async loader for locale JSON (browser only)
+// For server-side loading, import { loadLocale } from '../server/loadLocale' direktno u server kodu (API route, server action, getServerSideProps, itd.)
+export async function loadLocaleJson(locale: Locale, page: string): Promise<Record<string, string>> {
+  // Browser: use in-memory translations (should be provided by I18nProvider)
+  if (translations[locale] && translations[locale][page]) {
+    return translations[locale][page];
+  }
+  // If not found, warn and return empty object
+  console.warn('Translations not found in memory for', locale, page);
+  return {};
 }
 
-// Simple translation dictionary
-export const translations: Record<Locale, Record<string, string>> = {
-  en: {
-    login: 'Login',
-    register: 'Register',
-    email: 'Email',
-    password: 'Password',
-    language: 'Language',
-    home: 'Home',
-    logout: 'Logout',
-    name: 'Name',
-    user: 'User',
-    admin: 'Admin',
-    invalid_login: 'Invalid email or password',
-    register_success: 'Registration successful! Please log in.',
-    register_error: 'Registration failed',
-    error: 'An error occurred',
-  },
-  sr: {
-    login: 'Prijava',
-    register: 'Registracija',
-    email: 'Email',
-    password: 'Lozinka',
-    language: 'Jezik',
-    home: 'Početna',
-    logout: 'Odjava',
-    name: 'Ime',
-    user: 'Korisnik',
-    admin: 'Admin',
-    invalid_login: 'Pogrešan email ili lozinka',
-    register_success: 'Registracija uspješna! Prijavite se.',
-    register_error: 'Greška pri registraciji',
-    error: 'Došlo je do greške',
-  },
-};
+// Helper for sync fallback (for static imports or tests)
+export let translations: Record<string, any> = {};
 
-export function t(locale: Locale, key: string): string {
-  return translations[locale][key] || key;
+export function t(locale: Locale, key: string, page: string = 'login'): string {
+  if (translations[locale] && translations[locale][page]) {
+    return translations[locale][page][key] || key;
+  }
+  return key;
 }
 
-export { setLocaleCookie };
+export { setLocaleCookie } from './cookie';

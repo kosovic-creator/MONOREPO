@@ -1,0 +1,11 @@
+{
+  "title": "Prijava",
+  "email": "Email",
+  "password": "Lozinka",
+  "login": "Prijava",
+  "register": "Registracija",
+  "required": "Polje je obavezno",
+  "invalid_email": "Neispravna email adresa",
+  "password_min": "Lozinka mora imati najmanje 6 karaktera",
+  "invalid_login": "Pogrešan email ili lozinka"
+}

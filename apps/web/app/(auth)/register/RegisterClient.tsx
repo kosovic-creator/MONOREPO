@@ -1,12 +1,14 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "../../../../../packages/shared/i18n/useTranslations";
-import { useI18n } from "../../../../../packages/shared/i18n/useI18n";
-import { getRegisterSchema } from "../../../../../packages/shared/validation";
 
-export default function RegisterPage() {
+import { useTranslations } from "../../../../../packages/../packages/shared/i18n/useTranslations";
+import { useI18n } from "@../../../../packages/shared/i18n/useI18n";
+import { getRegisterSchema } from "@../../../../../packages/shared/validation";
+
+export default function RegisterClient() {
   const { locale } = useI18n();
+  const { t } = useTranslations("register");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [ime, setIme] = useState("");
@@ -14,7 +16,6 @@ export default function RegisterPage() {
   const [success, setSuccess] = useState("");
   const [uloga, setUloga] = useState("user");
   const router = useRouter();
-  const { t } = useTranslations("register");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -44,37 +45,31 @@ export default function RegisterPage() {
       <h1 className="text-2xl mb-4">{t("register")}</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
-          type="text"
-          placeholder={t("name")}
-          value={ime}
-          onChange={e => setIme(e.target.value)}
-          className="input input-bordered"
-        />
-        <select
-          value={uloga}
-          onChange={e => setUloga(e.target.value)}
-          className="input input-bordered"
-        >
-          <option value="user">{t("user")}</option>
-          <option value="admin">{t("admin")}</option>
-        </select>
-        <input
           type="email"
-          placeholder={t("email")}
           value={email}
           onChange={e => setEmail(e.target.value)}
-          className="input input-bordered"
+          placeholder={t("email")}
+          className="border p-2 rounded"
         />
         <input
           type="password"
-          placeholder={t("password")}
           value={password}
           onChange={e => setPassword(e.target.value)}
-          className="input input-bordered"
+          placeholder={t("password")}
+          className="border p-2 rounded"
         />
-        {error && <div className="text-red-500 text-sm">{error}</div>}
-        {success && <div className="text-green-600 text-sm">{success}</div>}
-        <button type="submit" className="btn btn-primary">{t("register")}</button>
+        <input
+          type="text"
+          value={ime}
+          onChange={e => setIme(e.target.value)}
+          placeholder={t("ime")}
+          className="border p-2 rounded"
+        />
+        {error && <div className="text-red-500">{error}</div>}
+        {success && <div className="text-green-500">{success}</div>}
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+          {t("register")}
+        </button>
       </form>
     </div>
   );

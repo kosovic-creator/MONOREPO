@@ -8,6 +8,12 @@
     "packages/*"
   ],
   "scripts": {
+    "predev:web": "node scripts/copy-locales.js",
+    "predev:admin": "node scripts/copy-locales.js",
+    "predev:all": "node scripts/copy-locales.js",
+    "prebuild:web": "node scripts/copy-locales.js",
+    "prebuild:admin": "node scripts/copy-locales.js",
+    "prebuild:all": "node scripts/copy-locales.js",
     "dev:web": "pnpm --filter web --workspace-root run dev",
     "dev:admin": "pnpm --filter admin --workspace-root run dev",
     "dev:all": "pnpm run dev:web & pnpm run dev:admin",
