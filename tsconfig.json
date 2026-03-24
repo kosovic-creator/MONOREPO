@@ -35,9 +35,11 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "incremental": true,
-    "baseUrl": "."
+    "incremental": true
   },
-  "include": ["apps/*", "packages/*"],
+  "include": [
+    "apps/**/*",
+    "packages/**/*"
+  ],
   "exclude": ["node_modules"]
 }
