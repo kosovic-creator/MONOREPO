@@ -1,17 +1,13 @@
-import type { Metadata } from 'next';
-import { Button } from "@sport/shared/components/ui/button";
 
-export const metadata: Metadata = {
-  title: 'Admin App',
-  description: 'Admin app in SPORT monorepo',
-};
+"use client";
+
+import { useTranslations } from '@sport/shared/i18n/useTranslations';
 
 export default function Home() {
+  const { t } = useTranslations("home");
   return (
     <main className="p-8 text-2xl font-bold">
-      Admin App Home (App Router)
-      <Button variant="primary">Primary Button</Button>
-      <div className="bg-yellow-500 text-white p-4">Test Tailwind</div>
+      {t("title_admin")}
     </main>
   );
 }
