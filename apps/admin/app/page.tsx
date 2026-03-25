@@ -1,13 +1,12 @@
+import HomeClient from './HomeClent';
+import { UčitajPost } from '../app/actions/post';
 
-"use client";
+export default async function Home() {
+ const postovi = await UčitajPost();
 
-import { useTranslations } from '@sport/shared/i18n/useTranslations';
-
-export default function Home() {
-  const { t } = useTranslations("home");
   return (
     <main className="p-8 text-2xl font-bold">
-      {t("title_admin")}
+     <HomeClient postovi={postovi} />
     </main>
   );
 }

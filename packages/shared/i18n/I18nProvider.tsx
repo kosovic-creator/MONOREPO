@@ -19,7 +19,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   // On locale change, load all translation JSONs for that locale and populate global translations
   useEffect(() => {
     async function loadAllTranslations() {
-      const pageNames = ["login", "register", "navbar", "home"];
+      const pageNames = ["login", "register", "navbar", "home", "post"];
       translations[locale] = translations[locale] || {};
       await Promise.all(
         pageNames.map(async (page) => {
