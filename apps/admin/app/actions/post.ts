@@ -15,7 +15,7 @@ export async function KreirajPost(title: string) {
       };
     }
 
-    revalidatePath('/registracija');
+    revalidatePath('/post');
     return {
       success: true,
       data: noviPost
