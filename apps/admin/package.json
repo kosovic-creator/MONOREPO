@@ -12,7 +12,8 @@
     "next": "14.0.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "@sport/shared": "workspace:*"
+    "@monorepo/shared": "workspace:*",
+    "@prisma/client": "^6.15.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0"
