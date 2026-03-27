@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import { buildAuthOptions } from "@sport/shared/nextauth";
+import { buildAuthOptions } from "@monorepo/shared/nextauth";
 import { prisma } from "../../../../lib/prisma";
 
 const handler = NextAuth(buildAuthOptions(prisma, "admin"));

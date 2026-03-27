@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useTranslations } from '@sport/shared/i18n/useTranslations';
+import { useTranslations } from '@monorepo/shared/i18n/useTranslations';
 
 export default function Home() {
   const { t } = useTranslations("home");
