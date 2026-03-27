@@ -1,0 +1,29 @@
+// This is a basic Prisma schema. Update models as needed.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+
+}
+
+// Example model
+model Korisnik {
+  id                String             @id @default(uuid())
+  email             String             @unique
+  lozinka           String?
+  ime               String?
+  uloga             String             @default("korisnik")
+  kreiran           DateTime           @default(now())
+  azuriran          DateTime           @updatedAt
+
+}
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+
+}
+
